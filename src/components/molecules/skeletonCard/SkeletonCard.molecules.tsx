@@ -1,4 +1,3 @@
-// src/features/properties/molecules/skeleton/SkeletonCard.molecule.tsx
 import styles from "./styles.module.css";
 
 function SkeletonCard() {

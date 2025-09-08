@@ -1,87 +1,24 @@
-import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import { PropertyFilters } from "@/features/properties/domain/entities/propertyFilters";
 import InputAtom from "@/components/atoms/input/Input.atom";
+import { usePropertyFilter } from "./usePropertyFilter";
 
 interface FilterAtomProps {
   readonly onFiltersChange?: (filters: PropertyFilters) => void;
 }
 
 function PropertyFilterMolecule({ onFiltersChange }: FilterAtomProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [nameInput, setNameInput] = useState("");
-  const [addressInput, setAddressInput] = useState("");
-  const [filters, setFilters] = useState<PropertyFilters>({
-    name: "",
-    address: "",
-    minPrice: undefined,
-    maxPrice: undefined,
-    page: 1,
-    pageSize: 20,
-  });
-
-  // Debounce effect para campos de texto (nombre y dirección)
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      const updatedFilters = {
-        ...filters,
-        name: nameInput || undefined,
-        address: addressInput || undefined,
-      };
-
-      // Solo aplicar si hay cambios reales
-      if (nameInput !== filters.name || addressInput !== filters.address) {
-        setFilters(updatedFilters);
-        onFiltersChange?.(updatedFilters);
-      }
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nameInput, addressInput]);
-
-  const handleInputChange = (
-    field: keyof PropertyFilters,
-    value: string | number
-  ) => {
-    if (field === "name") {
-      setNameInput(value as string);
-      return;
-    }
-
-    if (field === "address") {
-      setAddressInput(value as string);
-      return;
-    }
-
-    const newFilters = {
-      ...filters,
-      [field]: value === "" ? undefined : value,
-    };
-
-    setFilters(newFilters);
-    onFiltersChange?.(newFilters);
-  };
-
-  const handleClear = () => {
-    setNameInput("");
-    setAddressInput("");
-    const clearedFilters = {
-      name: "",
-      address: "",
-      minPrice: undefined,
-      maxPrice: undefined,
-      page: 1,
-      pageSize: 20,
-    };
-    setFilters(clearedFilters);
-    onFiltersChange?.(clearedFilters);
-  };
-
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const {
+    isExpanded,
+    nameInput,
+    addressInput,
+    handleInputChange,
+    handleClear,
+    setFilters,
+    filters,
+    toggleExpanded,
+  } = usePropertyFilter(onFiltersChange);
 
   return (
     <div className={`${styles.container} ${isExpanded ? styles.expanded : ""}`}>
@@ -212,5 +149,5 @@ function PropertyFilterMolecule({ onFiltersChange }: FilterAtomProps) {
       </div>
     </div>
   );
-};
+}
 export default PropertyFilterMolecule;

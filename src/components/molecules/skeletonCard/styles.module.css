@@ -1,64 +1,113 @@
 /* src/features/properties/molecules/skeleton/styles.module.css */
 
+.containerGlobal {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  flex-direction: column;
+  background-color: var(--gray-alpha-100);
+  box-shadow: 0 1px 4px rgba(44,42,41,.08);
+  width: 100%;
+}
+
 .container {
   position: relative;
   display: flex;
-  flex-direction: column; /* mobile-first: imagen arriba */
+  flex-direction: column;
   width: 100%;
-  border-radius: 12px;
-  background: var(--bg);
-  border: 1px solid var(--gray-alpha-200);
-  box-shadow: 0 0 24px var(--gray-alpha-100),
-    0 1px 0 color-mix(in srgb, var(--fg) 25%, transparent) inset;
-  overflow: hidden;
 }
 
-/* Imagen placeholder */
+/* Imagen placeholder - imita .media de Card */
 .media {
   position: relative;
   width: 100%;
-  height: 220px;
-}
-
-/* Desktop: card en fila */
-@media (min-width: 600px) {
-  .container {
-    flex-direction: row;
-    align-items: stretch;
-    min-height: 400px;
-  }
-  .media {
-    flex-shrink: 0;
-    width: 300px;
-    height: 200px;
-  }
+  aspect-ratio: 4 / 3; /* Igual que Card en mobile */
 }
 
 .content {
-  padding: 16px;
+  padding: 16px 16px 18px; /* Igual que Card */
+  color: var(--fg);
   gap: 10px;
   display: flex;
   flex-direction: column;
 }
 
-/* "Líneas" de texto */
+/* "Líneas" de texto que imitan el contenido real */
 .line {
-  height: 14px;
-  border-radius: 8px;
+  border-radius: 4px;
   background: color-mix(in srgb, var(--fg) 8%, transparent);
 }
+
+/* Title skeleton - imita .title */
 .lg {
-  width: 70%;
-  height: 18px;
+  width: 80%;
+  height: 22px; /* Similar al font-size: 18px + line-height */
+  margin-bottom: 8px;
 }
+
+/* Address skeleton - imita .meta */
 .md {
-  width: 50%;
+  width: 60%;
+  height: 16px; /* Similar al font-size: 13px */
+  margin-bottom: 10px;
 }
+
+/* Price container skeleton */
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
 .price {
-  width: 110px;
-  height: 18px;
-  border-radius: 10px;
+  width: 100px;
+  height: 20px; /* Similar al font-size: 16px */
+  border-radius: 4px;
   background: color-mix(in srgb, var(--fg) 8%, transparent);
+}
+
+.starting {
+  width: 80px;
+  height: 12px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+}
+
+/* Button skeleton - imita .button */
+.button {
+  padding: 16px;
+  background: color-mix(in srgb, var(--bg) 90%, var(--fg) 10%);
+  height: 52px; /* Altura aproximada del botón real */
+}
+
+/* Responsive behavior - igual que Card */
+@media (min-width: 600px) {
+  .containerGlobal {
+    flex-direction: row;
+  }
+  
+  .container {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 400px;
+  }
+  
+  .media {
+    flex: 0 0 55%;
+    width: 300px;
+    aspect-ratio: 3 / 2;
+  }
+  
+  .button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 120px;
+    height: 40px;
+    padding: 8px;
+  }
 }
 
 /* Efecto shimmer */
@@ -66,6 +115,7 @@
   position: relative;
   overflow: hidden;
 }
+
 .skel::after {
   content: "";
   position: absolute;

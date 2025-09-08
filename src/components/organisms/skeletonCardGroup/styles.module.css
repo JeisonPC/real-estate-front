@@ -19,7 +19,7 @@
   }
 }
 
+/* Remover contain-intrinsic-size para skeletons - deja que fluyan naturalmente */
 .container > * {
   content-visibility: auto;
-  contain-intrinsic-size: 260px 700px;
 }

@@ -21,25 +21,27 @@ function PropertiesTemplate() {
   if (error) return <div>Error loading properties</div>;
 
   return (
-    <section className={styles.container}>
+    <>
       {data ? (
-        data?.map((property) => (
-          <Card
-            key={property.id}
-            id={property.id}
-            idOwner={property.idOwner}
-            name={property.name}
-            address={property.address}
-            price={property.price}
-            imageUrl={property.imageUrl}
-          />
-        ))
+        <section className={styles.container}>
+          {data?.map((property) => (
+            <Card
+              key={property.id}
+              id={property.id}
+              idOwner={property.idOwner}
+              name={property.name}
+              address={property.address}
+              price={property.price}
+              imageUrl={property.imageUrl}
+            />
+          ))}
+        </section>
       ) : (
         <SkeletonCardGroupOrganism quantity={9} />
       )}
 
       <PropertyFilterMolecule onFiltersChange={handleFiltersChange} />
-    </section>
+    </>
   );
 }
 
