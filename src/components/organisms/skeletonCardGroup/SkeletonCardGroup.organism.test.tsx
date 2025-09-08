@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import SkeletonCardGroupOrganism from './SkeletonCardGroup.organism';
 
-// Mock del componente SkeletonCard
 jest.mock('@/components/molecules/skeletonCard/SkeletonCard.molecules', () => {
   return function MockSkeletonCard() {
     return (
@@ -18,7 +17,6 @@ jest.mock('@/components/molecules/skeletonCard/SkeletonCard.molecules', () => {
   };
 });
 
-// Mock de crypto.randomUUID para testing determinístico
 let mockUUIDCounter = 0;
 
 describe('SkeletonCardGroupOrganism Component', () => {
@@ -27,7 +25,6 @@ describe('SkeletonCardGroupOrganism Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUUIDCounter = 0;
-    // Mock crypto.randomUUID para generar UUIDs predecibles
     mockCryptoRandomUUID = jest.spyOn(crypto, 'randomUUID')
       .mockImplementation(() => {
         mockUUIDCounter++;
@@ -90,7 +87,6 @@ describe('SkeletonCardGroupOrganism Component', () => {
     it('should generate unique keys for each skeleton card', () => {
       render(<SkeletonCardGroupOrganism quantity={3} />);
 
-      // Verificar que se llamó crypto.randomUUID la cantidad correcta de veces
       expect(mockCryptoRandomUUID).toHaveBeenCalledTimes(3);
     });
 
@@ -118,7 +114,6 @@ describe('SkeletonCardGroupOrganism Component', () => {
     it('should maintain proper DOM structure', () => {
       const { container } = render(<SkeletonCardGroupOrganism quantity={3} />);
 
-      // Verificar estructura: container > skeleton cards
       const containerDiv = container.querySelector('.container');
       expect(containerDiv?.children).toHaveLength(3);
     });
@@ -139,32 +134,24 @@ describe('SkeletonCardGroupOrganism Component', () => {
     it('should use memoization for keys generation', () => {
       const { rerender } = render(<SkeletonCardGroupOrganism quantity={3} />);
 
-      // Primera renderización
       expect(mockCryptoRandomUUID).toHaveBeenCalledTimes(3);
 
-      // Resetear el mock counter
       mockCryptoRandomUUID.mockClear();
 
-      // Re-render con la misma quantity (debería usar keys memoizados)
       rerender(<SkeletonCardGroupOrganism quantity={3} />);
 
-      // No debería generar nuevos UUIDs ya que quantity no cambió
       expect(mockCryptoRandomUUID).not.toHaveBeenCalled();
     });
 
     it('should regenerate keys when quantity changes', () => {
       const { rerender } = render(<SkeletonCardGroupOrganism quantity={2} />);
 
-      // Primera renderización
       expect(mockCryptoRandomUUID).toHaveBeenCalledTimes(2);
 
-      // Reset counter
       mockCryptoRandomUUID.mockClear();
 
-      // Re-render con quantity diferente
       rerender(<SkeletonCardGroupOrganism quantity={4} />);
 
-      // Debería generar nuevos UUIDs porque quantity cambió
       expect(mockCryptoRandomUUID).toHaveBeenCalledTimes(4);
     });
   });

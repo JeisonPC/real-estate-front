@@ -1,4 +1,3 @@
-// src/store/theme.slice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Theme = "light" | "dark";

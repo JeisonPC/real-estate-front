@@ -4,13 +4,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PropertiesTemplate from './Properties.template';
 import { PropertyResponse } from '@/features/properties/domain/entities/propertyResponse';
 
-// Mock de useGetProperties hook
 const mockUseGetProperties = jest.fn();
 jest.mock('@/features/properties/hooks/useGetProperties', () => ({
   useGetProperties: () => mockUseGetProperties()
 }));
 
-// Mock del componente Card
 jest.mock('@/components/molecules/card/Card.molecules', () => {
   return function MockCard({ id, name, address, price }: PropertyResponse) {
     return (
@@ -23,7 +21,6 @@ jest.mock('@/components/molecules/card/Card.molecules', () => {
   };
 });
 
-// Mock del componente PropertyFilter
 jest.mock('@/components/molecules/filter/PropertyFilter.molecules', () => {
   return function MockPropertyFilter({ onFiltersChange }: { onFiltersChange: (filters: Record<string, unknown>) => void }) {
     return (
@@ -39,7 +36,6 @@ jest.mock('@/components/molecules/filter/PropertyFilter.molecules', () => {
   };
 });
 
-// Mock del componente SkeletonCardGroup
 jest.mock('@/components/organisms/skeletonCardGroup/SkeletonCardGroup.organism', () => {
   return function MockSkeletonCardGroup({ quantity }: { quantity: number }) {
     return (
@@ -54,7 +50,6 @@ jest.mock('@/components/organisms/skeletonCardGroup/SkeletonCardGroup.organism',
   };
 });
 
-// Helper para crear un QueryClient para testing
 const createTestQueryClient = () => new QueryClient({
   defaultOptions: {
     queries: {
@@ -63,7 +58,6 @@ const createTestQueryClient = () => new QueryClient({
   },
 });
 
-// Helper para renderizar con QueryClient
 const renderWithQueryClient = (component: React.ReactElement) => {
   const queryClient = createTestQueryClient();
   return render(
@@ -189,7 +183,6 @@ describe('PropertiesTemplate Component', () => {
 
       renderWithQueryClient(<PropertiesTemplate />);
 
-      // Verificar que las propiedades se pasan correctamente
       expect(screen.getByText('Beautiful Apartment')).toBeInTheDocument();
       expect(screen.getByText('123 Main St')).toBeInTheDocument();
       expect(screen.getByText('Cozy House')).toBeInTheDocument();
@@ -204,7 +197,6 @@ describe('PropertiesTemplate Component', () => {
 
       renderWithQueryClient(<PropertiesTemplate />);
 
-      // Verificar que cada card tiene un testid único
       expect(screen.getByTestId('card-1')).toBeInTheDocument();
       expect(screen.getByTestId('card-2')).toBeInTheDocument();
     });

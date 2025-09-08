@@ -3,7 +3,6 @@ import "@testing-library/jest-dom";
 import Card from "./Card.molecules";
 import { PropertyResponse } from "@/features/properties/domain/entities/propertyResponse";
 
-// Mock de next/image
 jest.mock("next/image", () => {
   return function MockImage({
     src,
@@ -19,11 +18,9 @@ jest.mock("next/image", () => {
     style?: React.CSSProperties;
     [key: string]: unknown;
   }) {
-    // Filtrar props específicas de Next.js Image que no son válidas para <img>
-    // Evitamos usar fill, priority, sizes
     const imgProps = {
-      src: src || undefined, // Convertir string vacío a undefined
-      alt: alt || "", // Asegurar que alt siempre tenga un valor
+      src: src || undefined,
+      alt: alt || "",
       style,
       ...otherProps,
     };
@@ -183,7 +180,6 @@ describe("Card Component", () => {
       expect(heading).toHaveTextContent("");
 
       const image = screen.getByTestId("property-image");
-      // Con nuestro mock, cuando src es vacío se convierte a undefined
       expect(image).not.toHaveAttribute("src");
       expect(image).toHaveAttribute("alt", "");
     });
@@ -200,7 +196,6 @@ describe("Card Component", () => {
 
       render(<Card {...undefinedProperty} />);
 
-      // El componente debería renderizar sin errores
       expect(screen.getByRole("article")).toBeInTheDocument();
       expect(screen.getByText("$100,000")).toBeInTheDocument();
     });

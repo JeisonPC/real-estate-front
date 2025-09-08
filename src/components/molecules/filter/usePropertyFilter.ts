@@ -58,7 +58,6 @@ export function usePropertyFilter(
     setIsExpanded(!isExpanded);
   };
 
-  // Debounce effect para campos de texto (nombre y dirección)
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       const updatedFilters = {
@@ -67,7 +66,6 @@ export function usePropertyFilter(
         address: addressInput || undefined,
       };
 
-      // Solo aplicar si hay cambios reales
       if (nameInput !== filters.name || addressInput !== filters.address) {
         setFilters(updatedFilters);
         onFiltersChange?.(updatedFilters);

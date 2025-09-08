@@ -8,7 +8,7 @@ export function ThemeApplier() {
   const theme = useSelector((s: RootState) => s.theme.current as string);
 
   useEffect(() => {
-    const el = document.documentElement; // <html>
+    const el = document.documentElement;
     el.setAttribute("data-theme", theme);
   }, [theme]);
 

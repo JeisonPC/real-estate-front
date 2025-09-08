@@ -15,23 +15,18 @@ describe('SkeletonCard Component', () => {
     it('should render all skeleton elements', () => {
       const { container } = render(<SkeletonCard />);
 
-      // Contenedor principal
       const mainContainer = container.querySelector('section');
       expect(mainContainer).toBeInTheDocument();
 
-      // Media placeholder
       const media = container.querySelector('.media');
       expect(media).toBeInTheDocument();
 
-      // Content area
       const content = container.querySelector('.content');
       expect(content).toBeInTheDocument();
 
-      // Skeleton lines
       const lines = container.querySelectorAll('.line');
       expect(lines).toHaveLength(2);
 
-      // Price skeleton
       const price = container.querySelector('.price');
       expect(price).toBeInTheDocument();
     });
@@ -58,12 +53,10 @@ describe('SkeletonCard Component', () => {
 
       const lines = container.querySelectorAll('.line');
       
-      // First line (large)
       expect(lines[0]).toHaveClass('line');
       expect(lines[0]).toHaveClass('lg');
       expect(lines[0]).toHaveClass('skel');
 
-      // Second line (medium)
       expect(lines[1]).toHaveClass('line');
       expect(lines[1]).toHaveClass('md');
       expect(lines[1]).toHaveClass('skel');
@@ -101,9 +94,8 @@ describe('SkeletonCard Component', () => {
       const content = container.querySelector('.content');
       expect(content).toBeInTheDocument();
 
-      // Content should contain the skeleton elements
       const contentChildren = content?.children;
-      expect(contentChildren).toHaveLength(3); // 2 lines + 1 price
+      expect(contentChildren).toHaveLength(3);
     });
 
     it('should render skeleton elements in correct order', () => {
@@ -112,15 +104,12 @@ describe('SkeletonCard Component', () => {
       const content = container.querySelector('.content');
       const children = content?.children;
 
-      // First child should be large line
       expect(children?.[0]).toHaveClass('line');
       expect(children?.[0]).toHaveClass('lg');
 
-      // Second child should be medium line
       expect(children?.[1]).toHaveClass('line');
       expect(children?.[1]).toHaveClass('md');
 
-      // Third child should be price
       expect(children?.[2]).toHaveClass('price');
     });
   });
@@ -130,25 +119,22 @@ describe('SkeletonCard Component', () => {
       const { container: container1 } = render(<SkeletonCard />);
       const { container: container2 } = render(<SkeletonCard />);
 
-      // Both should have the same structure
       const section1 = container1.querySelector('section');
       const section2 = container2.querySelector('section');
 
       expect(section1).toHaveClass('container');
       expect(section2).toHaveClass('container');
 
-      // Both should have same number of skeleton elements
       const skeletonElements1 = container1.querySelectorAll('.skel');
       const skeletonElements2 = container2.querySelectorAll('.skel');
 
-      expect(skeletonElements1).toHaveLength(4); // media + 2 lines + price
+      expect(skeletonElements1).toHaveLength(4);
       expect(skeletonElements2).toHaveLength(4);
     });
 
     it('should not have any interactive elements', () => {
       const { container } = render(<SkeletonCard />);
 
-      // Should not contain buttons, links, or inputs
       const buttons = container.querySelectorAll('button');
       const links = container.querySelectorAll('a');
       const inputs = container.querySelectorAll('input');

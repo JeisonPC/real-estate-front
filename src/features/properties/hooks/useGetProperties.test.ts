@@ -5,30 +5,26 @@ import { useGetProperties } from './useGetProperties';
 import { PropertyFilters } from '../domain/entities/propertyFilters';
 import { PropertyResponse } from '../domain/entities/propertyResponse';
 
-// Mock del use case
 const mockGetProperties = jest.fn();
 jest.mock('../usecases/getProperties.usecase', () => ({
   getProperties: (...args: unknown[]) => mockGetProperties(...args)
 }));
 
-// Mock del repository
 jest.mock('../repositories/apiProperty.repository', () => ({
   ApiPropertyRepository: jest.fn().mockImplementation(() => ({
     getAll: jest.fn()
   }))
 }));
 
-// Helper para crear QueryClient de testing
 const createTestQueryClient = () => new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
-      gcTime: 0, // Reemplaza cacheTime
+      gcTime: 0,
     },
   },
 });
 
-// Helper para renderizar hooks con QueryClient
 const renderHookWithQueryClient = <T,>(hook: () => T) => {
   const queryClient = createTestQueryClient();
   const wrapper = ({ children }: { children: React.ReactNode }) => 
@@ -66,9 +62,7 @@ describe('useGetProperties Hook', () => {
 
   describe('Hook Initialization', () => {
     it('should initialize with loading state', () => {
-      // Mock que nunca se resuelve para testing del estado loading
       const neverResolvingPromise = new Promise(() => {
-        // Intencionalmente vacío
       });
       mockGetProperties.mockImplementation(() => neverResolvingPromise);
       
@@ -85,7 +79,7 @@ describe('useGetProperties Hook', () => {
       renderHookWithQueryClient(() => useGetProperties());
 
       expect(mockGetProperties).toHaveBeenCalledWith(
-        expect.any(Object), // ApiPropertyRepository instance
+        expect.any(Object),
         undefined
       );
     });
@@ -166,7 +160,7 @@ describe('useGetProperties Hook', () => {
       renderHookWithQueryClient(() => useGetProperties(filters));
 
       expect(mockGetProperties).toHaveBeenCalledWith(
-        expect.any(Object), // ApiPropertyRepository instance
+        expect.any(Object),
         filters
       );
     });
@@ -209,7 +203,6 @@ describe('useGetProperties Hook', () => {
       const { queryClient: client1 } = renderHookWithQueryClient(() => useGetProperties(filters1));
       const { queryClient: client2 } = renderHookWithQueryClient(() => useGetProperties(filters2));
 
-      // Los query keys deberían ser diferentes
       const cache1Keys = client1.getQueryCache().getAll().map(query => query.queryKey);
       const cache2Keys = client2.getQueryCache().getAll().map(query => query.queryKey);
 
@@ -224,7 +217,6 @@ describe('useGetProperties Hook', () => {
       
       const { queryClient } = renderHookWithQueryClient(() => useGetProperties(filters));
       
-      // Renderizar el mismo hook otra vez con los mismos filtros
       renderHookWithQueryClient(() => useGetProperties(filters));
 
       const cacheKeys = queryClient.getQueryCache().getAll().map((query) => query.queryKey);
@@ -242,7 +234,6 @@ describe('useGetProperties Hook', () => {
         expect(result.current.isSuccess).toBe(true);
       });
 
-      // Verificar que el hook retorna todas las propiedades esperadas de useQuery
       expect(result.current).toHaveProperty('data');
       expect(result.current).toHaveProperty('error');
       expect(result.current).toHaveProperty('isLoading');
@@ -262,7 +253,6 @@ describe('useGetProperties Hook', () => {
 
       expect(typeof result.current.refetch).toBe('function');
       
-      // Test refetch
       mockGetProperties.mockClear();
       await result.current.refetch();
       

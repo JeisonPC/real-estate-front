@@ -26,17 +26,14 @@ describe("usePropertyFilter", () => {
   it("alterna el estado expandido", () => {
     const { result } = renderHook(() => usePropertyFilter());
 
-    // Inicialmente colapsado
     expect(result.current.isExpanded).toBe(false);
 
-    // Expandir
     act(() => {
       result.current.toggleExpanded();
     });
 
     expect(result.current.isExpanded).toBe(true);
 
-    // Colapsar
     act(() => {
       result.current.toggleExpanded();
     });
@@ -72,10 +69,8 @@ describe("usePropertyFilter", () => {
       result.current.handleInputChange("name", "Casa");
     });
 
-    // Debe actualizar nameInput inmediatamente
     expect(result.current.nameInput).toBe("Casa");
 
-    // Debe llamar onFiltersChange después del debounce (500ms)
     await waitFor(
       () => {
         expect(mockOnFiltersChange).toHaveBeenCalledWith({
@@ -95,13 +90,11 @@ describe("usePropertyFilter", () => {
     const mockOnFiltersChange = jest.fn();
     const { result } = renderHook(() => usePropertyFilter(mockOnFiltersChange));
 
-    // Establecer algunos valores
     act(() => {
       result.current.handleInputChange("name", "Casa");
       result.current.handleInputChange("address", "Calle 123");
     });
 
-    // Limpiar
     act(() => {
       result.current.handleClear();
     });
