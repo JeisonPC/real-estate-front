@@ -1,6 +1,5 @@
-import Image from "next/image";
+import PropertiesTemplate from "@/components/templates/properties/Properties.template";
 import styles from "./page.module.css";
-import PropertiesTemplate from "@/components/templates/properties.template";
 
 export default function Home() {
   return (
@@ -8,9 +7,6 @@ export default function Home() {
       <main className={styles.main}>
         <PropertiesTemplate />
       </main>
-      <footer className={styles.footer}>
-        <p>Powered by Jeison Poveda</p>
-      </footer>
     </div>
   );
 }

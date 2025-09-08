@@ -1,0 +1,94 @@
+/* src/features/properties/molecules/skeleton/styles.module.css */
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column; /* mobile-first: imagen arriba */
+  width: 100%;
+  border-radius: 12px;
+  background: var(--bg);
+  border: 1px solid var(--gray-alpha-200);
+  box-shadow: 0 0 24px var(--gray-alpha-100),
+    0 1px 0 color-mix(in srgb, var(--fg) 25%, transparent) inset;
+  overflow: hidden;
+}
+
+/* Imagen placeholder */
+.media {
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+
+/* Desktop: card en fila */
+@media (min-width: 600px) {
+  .container {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 400px;
+  }
+  .media {
+    flex-shrink: 0;
+    width: 300px;
+    height: 200px;
+  }
+}
+
+.content {
+  padding: 16px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* "Líneas" de texto */
+.line {
+  height: 14px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--fg) 8%, transparent);
+}
+.lg {
+  width: 70%;
+  height: 18px;
+}
+.md {
+  width: 50%;
+}
+.price {
+  width: 110px;
+  height: 18px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--fg) 8%, transparent);
+}
+
+/* Efecto shimmer */
+.skel {
+  position: relative;
+  overflow: hidden;
+}
+.skel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--fg) 10%, transparent) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Respeto accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .skel::after {
+    animation: none;
+  }
+}

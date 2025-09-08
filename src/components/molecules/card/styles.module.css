@@ -1,6 +1,132 @@
+.containerGlobal {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  flex-direction: column;
+  background-color: var(--gray-alpha-100);
+  box-shadow: 0 1px 4px rgba(44,42,41,.08);
+}
 .container {
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  position: relative;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  will-change: transform, box-shadow;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Halo un poco más marcado al hover, sin perder sobriedad */
+.container:hover {
+  box-shadow: 0 0 36px var(--gray-alpha-100), 0 1px 0 rgba(0, 0, 0, 0.25) inset;
+  transform: translateY(-2px);
+}
+
+/* Imagen full-bleed y proporcionada */
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* ajusta a tu layout */
+}
+
+.content {
+  padding: 16px 16px 18px;
+  color: var(--fg);
+}
+
+.title {
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.meta {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--fg) 65%, transparent);
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--fg);
+  opacity: 0.9;
+}
+
+.button {
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 16px;
-  background-color: #fff;
+  border: none;
+  background: color-mix(in srgb, var(--bg) 90%, var(--fg) 10%);
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  /* animación de aparición */
+  opacity: 1;
+  display: block;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, display 0s 0.2s;
+}
+
+/* Opcional: aureola externa muy suave, solo en pantallas precisas */
+@media (hover: hover) and (pointer: fine) {
+  .container::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: 0 0 60px var(--gray-alpha-100);
+    opacity: 0.4;
+  }
+}
+
+@media (min-width: 600px) {
+  .containerGlobal {
+    flex-direction: row;
+  }
+
+  .button {
+    bottom: 16px;
+    right: 16px;
+    writing-mode: vertical-lr;
+
+    opacity: 0;
+    display: none;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease, display 0s 0.25s;
+  }
+  .container {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 400px;
+  }
+  .media {
+    flex: 0 0 55%;
+    width: 300px;
+    aspect-ratio: 3 / 2;
+  }
+
+  .container:hover .media {
+    flex: 0 0 60%;
+    transition: flex-basis 0.25s ease;
+  }
+
+  .containerGlobal:hover .button {
+    opacity: 1;
+    display: inline-flex;
+  }
 }

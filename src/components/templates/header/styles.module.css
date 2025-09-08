@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.containerInternal {
+  border-bottom: 1px solid #ccc;
+  padding: 16px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+  gap: 16px;
+}
+.title {
+  font: 400 2.25rem / 1.11111 Cinzel, serif;
+  font-weight: 500;
+  color: var(--foreground);
+  text-align: center;
+}
+
+.containerButton {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 8px 0;
+  gap: 12px;
+}

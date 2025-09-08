@@ -1,0 +1,221 @@
+/* ===== Base (MOBILE FIRST) ===== */
+.container {
+  position: fixed;
+  z-index: 50;
+  bottom: 16px;
+  left: 16px;
+  right: 16px; /* ocupa ancho completo en móvil */
+  transform: none; /* sin translate en móvil */
+  background-color: var(--bg);
+  border: 1px solid var(--gray-alpha-100);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+  display: flex;
+  flex-direction: column-reverse; /* crece hacia arriba */
+}
+
+.container.expanded {
+  transform: scale(1.02); /* sutil en móvil */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.triggerButton {
+  background: none;
+  border: none;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+  order: 2; /* abajo */
+}
+.triggerButton:hover {
+  background-color: #f9fafb;
+}
+
+.label {
+  margin: 0;
+  font-size: 16px;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.closeButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: #6b7280;
+}
+.closeButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.filterForm {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  order: 1; /* arriba del botón */
+}
+.expanded .filterForm {
+  max-height: 420px; /* ajusta si necesitas más */
+  opacity: 1;
+  transform: translateY(0);
+  padding: 16px 16px 0 16px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr; /* móvil: una columna */
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.buttonsPricesContainer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.buttonsPricesContainer button {
+  padding: 8px 12px;
+  border: 1px solid var(--gray-alpha-100);
+  border-radius: 4px;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: fit-content;
+}
+
+.buttonsPricesContainer button:hover {
+  background-color: var(--gray-alpha-200);
+  border-color: var(--gray-alpha-100);
+}
+
+.buttonsPricesContainer button.active {
+  background-color: var(--gray-alpha-200);
+  color: #ffffff;
+  border-color: var(--gray-alpha-100);
+  font-weight: 500;
+}
+
+.buttonsPricesContainer button.active:hover {
+  background-color: var(--gray-alpha-200);
+  border-color: var(--gray-alpha-100);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field p {
+  color: var(--fg);
+  font-weight: 500;
+  font-size: 12px;
+  margin: 0;
+}
+
+.field label {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--fg);
+}
+
+.field input,
+.field select {
+  padding: 8px 10px;
+  border: 1px solid var(--gray-alpha-100);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid var(--gray-alpha-100);
+  margin-top: 8px;
+}
+
+.clearButton {
+  padding: 8px 16px;
+  border: 1px solid var(--gray-alpha-100);
+  border-radius: 4px;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clearButton:hover {
+  background-color: var(--gray-alpha-200);
+  border-color: var(--gray-alpha-100);
+}
+
+/* ===== Desktop / pantallas anchas ===== */
+@media (min-width: 640px) {
+  .container {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%); /* centrado */
+    max-width: 720px; /* ancho máx cómodo */
+    width: calc(
+      100% - 32px
+    ); /* evita pegarse a bordes en viewports intermedios */
+  }
+  .container.expanded {
+    transform: translateX(-50%) scale(1.02);
+  }
+  .formGrid {
+    grid-template-columns: 1fr 1fr; /* dos columnas en desktop */
+  }
+}
+
+/* Opcional: aún más ancho (tablet grande/desktop) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 860px;
+  }
+}
+
+/* Accesibilidad: menos animación si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .filterForm {
+    transition: none;
+  }
+}

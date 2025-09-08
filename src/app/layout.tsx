@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cinzel } from "next/font/google";
 import "./globals.css";
+import { QueryProvider } from "@/providers/QueryProvider";
+import HeaderTemplate from "@/components/templates/header/Header.template";
+import { ReduxProvider } from "@/providers/ReduxProvider";
+import { ThemeApplier } from "@/providers/ThemeApplier";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,8 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body className={cinzel.variable}>
+        <ReduxProvider>
+          <ThemeApplier />
+          <HeaderTemplate title="Top Luxury Buildings in South Florida" />
+          <QueryProvider>{children}</QueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

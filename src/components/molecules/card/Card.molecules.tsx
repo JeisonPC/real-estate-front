@@ -1,15 +1,33 @@
 import Image from "next/image";
-import { Property } from "./property.interface";
 import styles from "./styles.module.css";
+import { PropertyResponse } from "@/features/properties/domain/entities/propertyResponse";
 
-function Card({ image, title, description, price }: Readonly<Property>) {
+function Card({ imageUrl, name, address, price }: Readonly<PropertyResponse>) {
   return (
-    <div className={styles.container}>
-      <Image width={300} height={200} src={image} alt={title} />
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <p>${price}</p>
-    </div>
+    <article className={styles.containerGlobal}>
+      <div className={styles.container}>
+        <div className={styles.media}>
+          <Image
+            src={imageUrl}
+            alt={name}
+            fill
+            sizes="(max-width: 600px) 100vw, 600px"
+            style={{ objectFit: "cover" }}
+            priority={false}
+          />
+        </div>
+        <div className={styles.content}>
+          <h2 className={styles.title}>{name}</h2>
+          <p className={styles.meta}>{address}</p>
+          <div className={styles.priceContainer}>
+            <p className={styles.perMonth}>STARTING AT</p>
+
+            <span className={styles.price}>${price.toLocaleString()}</span>
+          </div>
+        </div>
+      </div>
+      <button className={styles.button}>Discover More</button>
+    </article>
   );
 }
 

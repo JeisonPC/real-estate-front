@@ -1,0 +1,13 @@
+.container {
+  flex-direction: column;
+}
+
+.containerInput {
+  border-bottom: 1px solid #ccc;
+  padding: 16px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+  gap: 16px;
+}
